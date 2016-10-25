@@ -100,4 +100,11 @@ public class HurricaneTrackerController {
         hurricanes.delete(h);
         return "redirect:/";
     }
+
+    @RequestMapping(path = "/edit-hurricane", method = RequestMethod.GET)
+    public String edit(Model model, int id) {
+        Hurricane h = hurricanes.findOne(id);
+        model.addAttribute("hurricane", h);
+        return "edit";
+    }
 }
