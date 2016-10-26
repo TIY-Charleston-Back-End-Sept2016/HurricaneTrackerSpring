@@ -1,5 +1,6 @@
-package com.theironyard;
+package com.theironyard.services;
 
+import com.theironyard.entities.Hurricane;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

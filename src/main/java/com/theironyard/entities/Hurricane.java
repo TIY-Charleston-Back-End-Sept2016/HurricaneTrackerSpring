@@ -1,4 +1,4 @@
-package com.theironyard;
+package com.theironyard.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,34 +9,34 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "hurricanes")
 public class Hurricane {
-    enum Category {
+    public enum Category {
         ONE, TWO, THREE, FOUR, FIVE
     }
 
     @Id
     @GeneratedValue
-    int id;
+    public int id;
 
     @Column(nullable = false)
-    String name;
+    public String name;
 
     @Column(nullable = false)
-    String location;
+    public String location;
 
     @Column(nullable = false)
-    Category category;
+    public Category category;
 
     @Column(nullable = false)
-    String image;
+    public String image;
 
     @Column(nullable = false)
-    LocalDate date;
+    public LocalDate date;
 
     @ManyToOne
-    User user;
+    public User user;
 
     @Transient
-    boolean isMe;
+    public boolean isMe;
 
     public Hurricane() {
     }
