@@ -1,5 +1,7 @@
 package com.theironyard.controllers;
 
+import com.theironyard.entities.Like;
+import com.theironyard.services.LikeRepository;
 import com.theironyard.utilities.PasswordStorage;
 import com.theironyard.entities.Hurricane;
 import com.theironyard.entities.User;
@@ -27,6 +29,9 @@ public class HurricaneTrackerController {
     @Autowired
     UserRepository users;
 
+    @Autowired
+    LikeRepository likes;
+
     @PostConstruct
     public void init() throws PasswordStorage.CannotPerformOperationException {
         User defaultUser = new User("Zach", PasswordStorage.createHash("hunter2"));
@@ -53,6 +58,7 @@ public class HurricaneTrackerController {
 
         for (Hurricane h : hlist) {
             h.isMe = h.user.name.equals(name);
+            h.isLiked = likes.findFirstByUserAndHurricane(user, h) != null;
         }
 
         model.addAttribute("hurricanes", hlist);
@@ -120,6 +126,22 @@ public class HurricaneTrackerController {
         h.category = hcategory;
         h.image = himage;
         hurricanes.save(h);
+        return "redirect:/";
+    }
+
+    @RequestMapping(path = "/like-hurricane", method = RequestMethod.POST)
+    public String addLike(int id, HttpSession session) throws Exception {
+        String name = (String) session.getAttribute("username");
+        User user = users.findFirstByName(name);
+        Hurricane h = hurricanes.findOne(id);
+        Like like = likes.findFirstByUserAndHurricane(user, h);
+        if (like != null) {
+            likes.delete(like);
+        }
+        else {
+            like = new Like(user, h);
+            likes.save(like);
+        }
         return "redirect:/";
     }
 

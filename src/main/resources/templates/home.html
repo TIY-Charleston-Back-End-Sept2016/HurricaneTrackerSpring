@@ -52,6 +52,7 @@
         <th>Date</th>
         <th></th>
         <th></th>
+        <th></th>
     </tr>
     {{#hurricanes}}
     <tr>
@@ -71,8 +72,17 @@
         </td>
         <td>
             {{#isMe}}
-            <a href="/edit-hurricane?id={{id}}">Edit</a>
+            <form action="/edit-hurricane" method="get">
+                <input type="hidden" value="{{id}}" name="id"/>
+                <button type="submit">Edit</button>
+            </form>
             {{/isMe}}
+        </td>
+        <td>
+            <form action="/like-hurricane" method="post">
+                <input type="hidden" value="{{id}}" name="id"/>
+                <button type="submit">{{^isLiked}}Like{{/isLiked}}{{#isLiked}}Unlike{{/isLiked}}</button>
+            </form>
         </td>
     </tr>
     {{/hurricanes}}

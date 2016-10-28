@@ -1,5 +1,7 @@
 package com.theironyard.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -35,8 +37,13 @@ public class Hurricane {
     @ManyToOne
     public User user;
 
+    @JsonIgnore
     @Transient
     public boolean isMe;
+
+    @JsonIgnore
+    @Transient
+    public boolean isLiked;
 
     public Hurricane() {
     }
